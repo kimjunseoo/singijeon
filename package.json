@@ -1,0 +1,19 @@
+{
+  "name": "singijeon",
+  "version": "1.0.0",
+  "description": "Easy, Simple, Fast Load Testing Tool",
+  "main": "index.js",
+  "scripts": {
+    "singijeon": "node ./index"
+  },
+  "author": "Junseo Kim",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "progress": "^2.0.3"
+  },
+  "bin": {
+    "singijeon": "./index.js"
+  },
+  "type": "module"
+}

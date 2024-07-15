@@ -23,7 +23,7 @@ function getMedian(arr) {
   }
 }
 
-async function sendHttpRequests(url, duration, rate) {
+async function sendHttpRequests(url, method, port, duration, rate) {
   const interval = 1000 / rate;
   const startTime = Date.now();
   const endTime = startTime + duration * 1000;
@@ -64,33 +64,41 @@ async function sendHttpRequests(url, duration, rate) {
     }
 
     let reqeustStartDate = Date.now();
-    http
-      .get(url, (res) => {
-        // 요청 성공 처리
+    const requestOptions = {
+      method: method ? method.toUpperCase() : "GET",
+      port: port ? port.toString() : "80",
+    };
 
-        let requestEndDate = Date.now();
-        responseSpeed.push(requestEndDate - reqeustStartDate);
-        ++requestSuccessCount;
+    const req = http.request(url, requestOptions, (res) => {
+      // 요청 성공 처리
 
-        if (!responseStatus.has(res.statusCode)) {
-          responseStatus.set(res.statusCode, 1);
-        } else {
-          responseStatus.set(
-            res.statusCode,
-            responseStatus.get(res.statusCode) + 1
-          );
-        }
+      let requestEndDate = Date.now();
+      responseSpeed.push(requestEndDate - reqeustStartDate);
+      ++requestSuccessCount;
 
-        progressBar.tick();
-      })
-      .on("error", (err) => {
-        let requestEndDate = Date.now();
-        responseSpeed.push(requestEndDate - reqeustStartDate);
+      if (!responseStatus.has(res.statusCode)) {
+        responseStatus.set(res.statusCode, 1);
+      } else {
+        responseStatus.set(
+          res.statusCode,
+          responseStatus.get(res.statusCode) + 1
+        );
+      }
 
-        ++requestErrorCount;
+      progressBar.tick();
+    });
 
-        progressBar.tick();
-      });
+    req.on("error", (err) => {
+      console.log(err);
+      let requestEndDate = Date.now();
+      responseSpeed.push(requestEndDate - reqeustStartDate);
+
+      ++requestErrorCount;
+
+      progressBar.tick();
+    });
+
+    req.end();
   }, interval);
 }
 
@@ -98,9 +106,17 @@ program
   .arguments("<url>")
   .requiredOption("-d, --duration <duration>", "How long will it be tested")
   .requiredOption("-r --rate <rate>", "How many requests per second")
+  .option("-m --method <method>", "HTTP Method / default is GET ")
+  .option("-p --port <port>", "port number / default is 80")
   .action((url) => {
     console.log("요청을 시작합니다...");
-    sendHttpRequests(url, program.opts().duration, program.opts().rate);
+    sendHttpRequests(
+      url,
+      program.opts().method,
+      program.opts().port,
+      program.opts().duration,
+      program.opts().rate
+    );
     return;
   });
 

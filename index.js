@@ -2,6 +2,7 @@
 
 import { Command } from "commander";
 import http from "http";
+import https from "https";
 import ProgressBar from "progress";
 
 const program = new Command();
@@ -32,11 +33,24 @@ async function sendHttpRequests(url, method, port, duration, rate) {
     total: totalRequests,
   });
 
+  const requestUrl = new URL(url);
+  const requestOptions = {
+    method: method ? method.toUpperCase() : "GET",
+    port: port
+      ? port.toString()
+      : requestUrl.protocol === "https:"
+      ? "443"
+      : "80",
+  };
+  console.log(requestOptions);
   let requestSuccessCount = 0; //요청 성공 횟수
   let requestErrorCount = 0; //요청 실패 횟수
   let responseSpeed = []; //응답 속도
   let responseStatus = new Map();
 
+  var client = http;
+  client = requestUrl.protocol == "https:" ? https : client;
+  console.log(requestUrl.protocol);
   const intervalId = setInterval(() => {
     if (Date.now() >= endTime) {
       clearInterval(intervalId);
@@ -64,12 +78,8 @@ async function sendHttpRequests(url, method, port, duration, rate) {
     }
 
     let reqeustStartDate = Date.now();
-    const requestOptions = {
-      method: method ? method.toUpperCase() : "GET",
-      port: port ? port.toString() : "80",
-    };
 
-    const req = http.request(url, requestOptions, (res) => {
+    const req = client.request(url, requestOptions, (res) => {
       // 요청 성공 처리
 
       let requestEndDate = Date.now();
@@ -107,7 +117,10 @@ program
   .requiredOption("-d, --duration <duration>", "How long will it be tested")
   .requiredOption("-r --rate <rate>", "How many requests per second")
   .option("-m --method <method>", "HTTP Method / default is GET ")
-  .option("-p --port <port>", "port number / default is 80")
+  .option(
+    "-p --port <port>",
+    "port number / default => on http -> 80 https -> 443"
+  )
   .action((url) => {
     console.log("요청을 시작합니다...");
     sendHttpRequests(

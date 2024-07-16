@@ -42,7 +42,6 @@ async function sendHttpRequests(url, method, port, duration, rate) {
       ? "443"
       : "80",
   };
-  console.log(requestOptions);
   let requestSuccessCount = 0; //요청 성공 횟수
   let requestErrorCount = 0; //요청 실패 횟수
   let responseSpeed = []; //응답 속도
@@ -50,7 +49,7 @@ async function sendHttpRequests(url, method, port, duration, rate) {
 
   var client = http;
   client = requestUrl.protocol == "https:" ? https : client;
-  console.log(requestUrl.protocol);
+
   const intervalId = setInterval(() => {
     if (Date.now() >= endTime) {
       clearInterval(intervalId);
@@ -122,7 +121,7 @@ program
     "port number / default => on http -> 80 https -> 443"
   )
   .action((url) => {
-    console.log("요청을 시작합니다...");
+    console.log("Start Request...");
     sendHttpRequests(
       url,
       program.opts().method,

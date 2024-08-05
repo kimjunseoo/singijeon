@@ -28,6 +28,7 @@
   "main": "index.js",
   "dependencies": {
     "commander": "^12.1.0",
+    "inquirer": "^10.1.7",
     "progress": "^2.0.3"
   },
   "bin": {

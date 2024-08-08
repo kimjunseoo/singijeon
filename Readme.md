@@ -33,9 +33,8 @@
 
 - Enter the command below in cli
   ```jsx
-  singijeon https://httpbin.org --duration 2 --rate 1
+  singijeon;
   ```
-  This command sends a Get request to the https://httpbin.org server once per second to port 80 for two seconds.
 
 ### How to use
 
@@ -43,14 +42,14 @@
   ```jsx
   singijeon;
   ```
-- Argument
-  - After enter ‘singijeon’ , enter the server address to which the request is sent as a factor.
-- Options
-  - In order to use singijeon, you must use the options appropriately.
+- Steps
 
-    | abbreviated | general    | description                  | example | required |
-    | ----------- | ---------- | ---------------------------- | ------- | -------- |
-    | -d          | --duration | How long will it be tested   | 10      | O        |
-    | -r          | --rate     | How many requests per second | 5       | O        |
-    | -m          | --method   | HTTP Method                  | POST    | X        |
-    | -p          | --port     | port number                  | 3000    | X        |
+  1. Choose HTTP Protocol
+  2. Depending on the HTTP Protocol, enter or select the information to proceed with the test.
+
+  - If you have selected REST API, you need to input/select the information below.
+    - Endpoint URL
+    - duration
+    - rate
+    - method
+    - port

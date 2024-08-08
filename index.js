@@ -73,27 +73,3 @@ if (procotol == "rest") {
 
   await sendHttpRequests(url, method, port, duration, rate);
 }
-
-/* program
-  .arguments("<url>")
-  .requiredOption("-d, --duration <duration>", "How long will it be tested")
-  .requiredOption("-r --rate <rate>", "How many requests per second")
-  .option("-m --method <method>", "HTTP Method / default is GET ")
-  .option(
-    "-p --port <port>",
-    "port number / default => on http -> 80 https -> 443"
-  )
-  .action((url) => {
-    console.log("Start Request...");
-    sendHttpRequests(
-      url,
-      program.opts().method,
-      program.opts().port,
-      program.opts().duration,
-      program.opts().rate
-    );
-    return;
-  });
-
-program.parse(process.argv);
- */

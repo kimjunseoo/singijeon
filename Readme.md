@@ -20,7 +20,7 @@
 
 - Install Singijeon via `npm`
 
-  ```jsx
+  ```
   npm install -g singijeon
   ```
 
@@ -32,19 +32,20 @@
 ### Run your first test
 
 - Enter the command below in cli
-  ```jsx
-  singijeon;
+  ```
+  singijeon
   ```
 
 ### How to use
 
 - You can run this cli application through the command
-  ```jsx
-  singijeon;
+  ```
+  singijeon
   ```
 - Steps
 
   1. Choose HTTP Protocol
+
   2. Depending on the HTTP Protocol, enter or select the information to proceed with the test.
 
   - If you have selected REST API, you need to input/select the information below.

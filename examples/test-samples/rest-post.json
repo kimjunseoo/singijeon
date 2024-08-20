@@ -1,0 +1,15 @@
+{
+  "method": "POST",
+  "url": "https://jsonplaceholder.typicode.com/posts",
+  "port": 443,
+  "duration": 3,
+  "rate": 1,
+  "header": {
+    "Content-type": "application/json; charset=UTF-8"
+  },
+  "body": {
+    "title": "foo",
+    "body": "bar",
+    "userId": 1
+  }
+}

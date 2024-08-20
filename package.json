@@ -36,5 +36,6 @@
     "singijeon": "./index.js"
   },
   "type": "module",
-  "preferGlobal": true
+  "preferGlobal": true,
+  "homepage": "https://singijeon.com/"
 }

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-import { input, select, Separator } from "@inquirer/prompts";
+import { confirm, editor, input, select, Separator } from "@inquirer/prompts";
+import fileSelector from "inquirer-file-selector";
 import { sendHttpRequests } from "./lib/core.js";
+import fs from "fs";
 
 const procotol = await select({
   message: "Select api protocols",
@@ -28,48 +30,31 @@ const procotol = await select({
 });
 
 if (procotol == "rest") {
-  const url = await input({
-    message:
-      "Enter the endpoint url to send the request (ex. https://singijeon.com)",
-    required: true,
-  });
-  const duration = await input({
-    message: "How long will it be tested",
-    required: true,
-  });
-  const rate = await input({
-    message: "How many requests per second",
-    required: true,
-  });
-  const method = await select({
-    message: "What method will you use to request it",
-    choices: [
-      {
-        name: "GET",
-        value: "get",
-      },
-      {
-        name: "POST",
-        value: "post",
-      },
-      {
-        name: "PATCH",
-        value: "patch",
-      },
-      {
-        name: "PUT",
-        value: "put",
-      },
-      {
-        name: "DELETE",
-        value: "delete",
-      },
-    ],
-  });
-  const port = await input({
-    message:
-      "What port on the endpoint (default => on http -> 80 https -> 443 )",
+  const filePath = await fileSelector({
+    message: "Select a file:",
+    match: (file) => file.name.endsWith(".json"),
   });
 
-  await sendHttpRequests(url, method, port, duration, rate);
+  const dataFile = fs.readFileSync(filePath, "utf8");
+  const data = JSON.parse(dataFile);
+
+  if (!data.url) {
+    throw new Error(`url is required in the test file(json)`);
+  } else if (!data.duration) {
+    throw new Error(`duration is required in the test file(json)`);
+  } else if (!data.rate) {
+    throw new Error(`rate is required in the test file(json)`);
+  } else if (!data.method) {
+    throw new Error(`method is required in the test file(json)`);
+  }
+
+  await sendHttpRequests(
+    data.url,
+    data.method,
+    data.port,
+    data.duration,
+    data.rate,
+    data.header,
+    data.body
+  );
 }

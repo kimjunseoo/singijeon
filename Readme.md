@@ -12,7 +12,7 @@
 ## Feature
 
 - **A variety of ways :** You can set HTTP methods, test duration, requests per second, ports, and so on.
-- **Simple to run, but powerful. :** Test with a command in a single line of cli and show various analysis data.
+- **Simple to run, but powerful. :** Test with simple json and a command in a single line of cli. It will be show various analysis data.
 
 ## How to use
 
@@ -29,28 +29,51 @@
 - System requirement
   - Singijeon runs on Windows, linux, macos with most recent LTS release of Node.js / NPM.
 
-### Run your first test
-
-- Enter the command below in cli
-  ```
-  singijeon
-  ```
-
 ### How to use
 
-- You can run this cli application through the command
-  ```
-  singijeon
-  ```
-- Steps
+- 1. Prepare a json file with the information you want to use for the test.
+     Based on the type you want to test, make a json file according to the items below
 
-  1. Choose HTTP Protocol
+  - REST API
+    |Key|Value Type|Description|Example|Required|
+    |------|---|---|---|---|
+    |method|string|all of http method(get,post,put,patch,delete etc)|"POST"|True|
+    |url|string|endpoint url to send request|Example|True|
+    |port|number|port number (443/80 is default on https/http)|Example|False|
+    |duration|number|How long will it be tested|10|True|
+    |rate|number|How many requests per second|3|True|
+    |header|object|HTTP Header| {"Content-type": "application/json; charset=UTF-8"}|False|
+    |body|object|HTTP Body|{"title": "foo","body": "bar","userId": 1}|False|
 
-  2. Depending on the HTTP Protocol, enter or select the information to proceed with the test.
+    - example
 
-  - If you have selected REST API, you need to input/select the information below.
-    - Endpoint URL
-    - duration
-    - rate
-    - method
-    - port
+    ```
+    //data.json
+
+      {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "port": 443,
+        "duration": 3,
+        "rate": 1,
+        "header": {
+          "Content-type": "application/json; charset=UTF-8"
+        },
+        "body": {
+          "title": "foo",
+          "body": "bar",
+          "userId": 1
+        }
+      }
+    ```
+
+- 2. Enter the command below in cli
+     ```
+     singijeon
+     ```
+
+- 3. Select the api protocols you want to test
+
+- 4. Select the json file created in the first step.
+
+  // If you don't know how to write a json file for test, you can refer to the example in the examples directory in this repository.

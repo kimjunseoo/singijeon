@@ -12,14 +12,15 @@ const procotol = await select({
       name: "REST API",
       value: "rest",
       description: "Send HTTP requests using REST API.",
+      disabled: false,
     },
-    new Separator(),
     {
       name: "GraphQL",
       value: "graphql",
       description: "Send HTTP requests using GraphQL",
-      disabled: true,
+      disabled: false,
     },
+    new Separator(),
     {
       name: "gRPC",
       value: "grpc",
@@ -57,4 +58,14 @@ if (procotol == "rest") {
     data.header,
     data.body
   );
+}
+
+if (procotol == "graphql") {
+  const filePath = await fileSelector({
+    message: "Select a file:",
+    match: (file) => file.name.endsWith(".json"),
+  });
+
+  const dataFile = fs.readFileSync(filePath, "utf8");
+  const data = JSON.parse(dataFile);
 }

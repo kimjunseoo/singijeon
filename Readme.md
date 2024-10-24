@@ -5,6 +5,12 @@
 </p>
 </div>
 
+<div align="center">
+
+![singijeon_시연영상2](https://github.com/user-attachments/assets/f813317b-b206-4189-ab5a-a4715e0676a3)
+
+</div>
+
 ## Intro
 
 - **Singijeon** is the simplest and fastest load testing tool. It shows various analyses of the test results.

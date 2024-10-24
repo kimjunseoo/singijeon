@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "url": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+  "port": 443,
+  "duration": 3,
+  "rate": 1,
+  "header": {
+    "Content-type": "application/json;charset=UTF-8"
+  },
+  "body": {
+    "query": "{ allFilms { films { title } }}"
+  }
+}

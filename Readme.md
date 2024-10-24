@@ -44,8 +44,8 @@
     |Key|Value Type|Description|Example|Required|
     |------|---|---|---|---|
     |method|string|all of http method(get,post,put,patch,delete etc)|"POST"|True|
-    |url|string|endpoint url to send request|Example|True|
-    |port|number|port number (443/80 is default on https/http)|Example|False|
+    |url|string|endpoint url to send request|"https://jsonplaceholder.typicode.com/posts"|True|
+    |port|number|port number (443/80 is default on https/http)|443|False|
     |duration|number|How long will it be tested|10|True|
     |rate|number|How many requests per second|3|True|
     |header|object|HTTP Header| {"Content-type": "application/json; charset=UTF-8"}|False|
@@ -71,6 +71,38 @@
           "userId": 1
         }
       }
+    ```
+
+  - GraphQL
+    |Key|Value Type|Description|Example|Required|
+    |------|---|---|---|---|
+    |method|string|http method(get or post)|"POST"|True|
+    |url|string|endpoint url to send request|"https://swapi-graphql.netlify.app/.netlify/functions/index"|True|
+    |port|number|port number (443/80 is default on https/http)|443|False|
+    |duration|number|How long will it be tested|10|True|
+    |rate|number|How many requests per second|3|True|
+    |header|object|HTTP Header| {"Content-type": "application/json; charset=UTF-8"}|False|
+    |body|object|GraphQL query converted to Json format. Recommend using https://datafetcher.com/graphql-json-body-converter|{"query": "{ allFilms { films { title } }}"}|False|
+
+    - example
+
+    ```
+    //data.json
+
+      {
+        "method": "POST",
+        "url": "https://swapi-graphql.netlify.app/.netlify/functions/index",
+        "port": 443,
+        "duration": 3,
+        "rate": 1,
+        "header": {
+            "Content-type": "application/json;charset=UTF-8"
+        },
+        "body": {
+            "query": "{ allFilms { films { title } }}"
+        }
+      }
+
     ```
 
 - 2. Enter the command below in cli

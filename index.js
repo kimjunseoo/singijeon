@@ -68,4 +68,14 @@ if (procotol == "graphql") {
 
   const dataFile = fs.readFileSync(filePath, "utf8");
   const data = JSON.parse(dataFile);
+
+  await sendHttpRequests(
+    data.url,
+    data.method,
+    data.port,
+    data.duration,
+    data.rate,
+    data.header,
+    data.body
+  );
 }
